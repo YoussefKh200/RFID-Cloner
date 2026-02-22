@@ -1,190 +1,203 @@
-🔐 Advanced RFID Cloner Pro
-<div align="center">
-https://img.shields.io/badge/version-2.0-blue
-https://img.shields.io/badge/status-educational%2520only-orange
-https://img.shields.io/badge/Arduino-IDE-00979D
-https://img.shields.io/badge/license-MIT-green
-
-A sophisticated portable device for understanding RFID security vulnerabilities in MIFARE Classic cards
-
-Features • Hardware • Quick Start • Documentation
-
-</div>
-⚠️ CRITICAL LEGAL NOTICE
-This project is STRICTLY FOR EDUCATIONAL PURPOSES only.
+ADVANCED RFID CLONER PRO 
+================================================================================
+⚠️ LEGAL WARNING - MUST READ
+================================================================================
+THIS PROJECT IS FOR EDUCATIONAL PURPOSES ONLY!
 
 Only test on cards you personally own
 
-Obtain written permission before testing any access control system
+Get written permission before testing any access system
 
-Unauthorized cloning may violate laws and property regulations
+Unauthorized cloning may violate laws
 
-The developers assume NO liability for misuse
+Developers assume NO liability for misuse
 
-✨ Features
-Core Capabilities
-Full Card Dumping – Read all 64 blocks (1KB) from MIFARE Classic cards
+================================================================================
+WHAT IS THIS?
+================================================================================
+A portable device that demonstrates security vulnerabilities in MIFARE Classic RFID cards (13.56MHz) by reading, analyzing, and cloning them.
 
-Multi-Card Storage – Save up to 8 complete card dumps in non-volatile EEPROM
+================================================================================
+KEY FEATURES
+================================================================================
 
-Dictionary Attacks – Tests 7+ default manufacturer keys automatically
+Full card dumping - Reads all 64 blocks from MIFARE Classic cards
 
-Key Extraction – Advanced nested attack framework for unknown keys
+Multi-card storage - Save up to 8 complete card dumps in memory
 
-Magic Card Support – UID writing capability for special writable cards
+Key extraction - Dictionary attacks + nested attack framework
 
-Hardware Highlights
-Standalone Operation – No computer needed, fully portable
+Standalone operation - No computer needed, battery powered
 
-OLED Display – 128x64 I2C screen with intuitive menu system
+OLED menu system - 128x64 display with rotary encoder navigation
 
-Rotary Encoder – Easy navigation with push-button selection
+LED indicators - Visual status (Green/Yellow/Red)
 
-LED Indicators – Visual status (Green/Yellow/Red)
+Magic card support - UID writing for special writable cards
 
-Battery Powered – Li-ion rechargeable with monitoring
+================================================================================
+HARDWARE REQUIREMENTS
+================================================================================
 
-User Interface
-6 Main Menu Options with submenus
+Arduino Nano/Pro Mini (ATmega328P)
 
-Real-time Progress indicators during operations
+MFRC522 RFID module (13.56MHz)
 
-Battery Status with visual bar graph
+OLED 128x64 I2C display (SSD1306)
 
-Card Details – View UID, type, key statistics
+Rotary encoder with push button
 
-🔧 Hardware Requirements
-Essential Components
-Component	Specs	Purpose
-Arduino	Nano/Pro Mini (ATmega328P)	Main controller
-RFID Module	MFRC522 (13.56MHz)	Read/write cards
-OLED Display	128x64 I2C (SSD1306)	User interface
-Rotary Encoder	With push button	Menu navigation
-Battery	Li-ion 18650 (3.7V)	Portable power
-TP4056 Module	With protection	Battery charging
-MT3608	Boost converter	3.7V → 5V conversion
-Quick Wiring Reference
+Li-ion 18650 battery (3.7V)
+
+TP4056 charging module with protection
+
+MT3608 boost converter (3.7V to 5V)
+
+LEDs: Green, Yellow, Red + 330Ω resistors
+
+Voltage divider: 2x 10K resistors for battery monitoring
+
+Prototyping board and wires
+
+================================================================================
+WIRING CONNECTIONS
+================================================================================
+MFRC522 → Arduino:
+SDA → D10
+SCK → D13
+MOSI → D11
+MISO → D12
+RST → D9
+3.3V → 3.3V
+GND → GND
+
+OLED → Arduino:
+SDA → A4
+SCL → A5
+VCC → 5V
+GND → GND
+
+Encoder → Arduino:
+CLK → D2
+DT → D3
+SW → D4
+
 text
-MFRC522 → D10(DTA), D13(SCK), D11(MOSI), D12(MISO), D9(RST)
-OLED    → A4(SDA), A5(SCL)
-Encoder → D2(CLK), D3(DT), D4(SW)
-LEDs    → D5(Green), D6(Yellow), D7(Red)
-Battery → A0 (via voltage divider)
-🚀 Quick Start
-1️⃣ Build Hardware
-Assemble components per wiring diagram
+→ 5V
+GND → GND
 
-Double-check 3.3V for MFRC522 (never 5V!)
+LEDs → Arduino (with 330Ω resistors):
+Green → D5
+Yellow → D6
+Red → D7
 
-Test power delivery before connecting RFID
+Battery → Arduino:
+Battery+ → A0 through voltage divider (10K+10K)
+Battery- → GND
 
-2️⃣ Install Software
-bash
-# Required Libraries (install via Arduino Library Manager)
-- MFRC522 by Miguel Balboa
-- Adafruit SSD1306
-- Adafruit GFX
-3️⃣ First Use
+================================================================================
+MENU SYSTEM
+================================================================================
+MAIN MENU
+├── Read Card → Dump card to memory
+├── Write Card → Clone to blank card
+├── View Cards → Browse saved dumps (slots 0-7)
+├── Extract Keys → Advanced key recovery
+├── Settings → Clear all cards, About info
+└── Battery Status → Show power level
+
+================================================================================
+QUICK START GUIDE
+================================================================================
+
+Build hardware according to wiring diagram
+
+Install required libraries in Arduino IDE:
+
+MFRC522 by Miguel Balboa
+
+Adafruit SSD1306
+
+Adafruit GFX
+
+Upload code to Arduino
+
 Power on device
 
 Navigate with encoder to "Read Card"
 
 Place your card on reader
 
-Save to slot when prompted
+Save to a slot when prompted
 
 Place blank card and select "Write Card"
 
-📱 Menu System
-text
-MAIN MENU
-├── Read Card      → Dump card to memory
-├── Write Card     → Clone to blank card
-├── View Cards     → Browse saved dumps
-├── Extract Keys   → Advanced key recovery
-├── Settings       → Clear data, About
-└── Battery Status → Power level
-📊 Technical Specs
-Parameter	Value
-Frequency	13.56 MHz
-Card Support	MIFARE Classic 1K/4K
-Storage	8 cards (1KB EEPROM)
-Power	3.7V Li-ion
-Battery Life	10-15 hours
-Display	128x64 OLED
-🔍 How It Works
-RFID Card Structure
-16 sectors × 4 blocks = 64 blocks total
+================================================================================
+TECHNICAL SPECIFICATIONS
+================================================================================
+Frequency: 13.56 MHz
+Card support: MIFARE Classic 1K and 4K
+Storage: 8 complete cards in EEPROM
+Power: 3.7V Li-ion battery
+Battery life: 10-15 hours continuous use
+Display: 128x64 OLED, 0.96 inch
 
-Each block = 16 bytes (1KB total memory)
+================================================================================
+HOW IT WORKS
+================================================================================
+MIFARE Classic cards have 1KB memory divided into 16 sectors (4 blocks each).
+Each sector is protected by two 6-byte keys (Key A and Key B).
 
-Sector trailer blocks contain access keys
+The device attempts authentication using default manufacturer keys. If successful,
+it reads all data blocks and stores them along with any discovered keys.
 
-Block 0 contains factory-locked UID
+For writing, it authenticates to the blank card using default or recovered keys
+and writes the saved data blocks.
 
-Attack Methods
-Dictionary – Tests common default keys
+================================================================================
+KNOWN LIMITATIONS
+================================================================================
 
-Nested – Uses known keys to extract others
+UID cloning requires special "magic cards" (genuine cards have locked UIDs)
 
-Mfkey32 – Framework for nonce capture attacks
+Won't work with custom keys not in dictionary
 
-⚠️ Known Limitations
-UID Cloning – Requires special "magic cards" for full UID copy
+Cannot clone MIFARE DESFire or other encrypted cards
 
-Encrypted Cards – Won't work without keys
+Some cards have irreversible write protection
 
-Locked Cards – Some cards have irreversible write protection
+================================================================================
+TROUBLESHOOTING
+================================================================================
+No display: Check I2C address (try 0x3C or 0x3D)
+Card not detected: Verify SPI connections, ensure 3.3V to MFRC522
+Read fails: Try key extraction feature first
+Write fails: Card may be read-only or authentication failed
+Battery not charging: Check TP4056 connections
 
-Newer Cards – MIFARE DESFire not supported
+================================================================================
+REQUIRED LIBRARIES
+================================================================================
 
-🛠️ Troubleshooting
-Issue	Solution
-No display	Check I2C address (0x3C or 0x3D)
-Card not detected	Verify SPI connections
-Read fails	Try key extraction first
-Write fails	Card may be read-only
-Battery not charging	Check TP4056 connections
-📚 Learning Resources
-Understanding RFID Security
-How electromagnetic coupling works
+MFRC522 by Miguel Balboa
 
-MIFARE memory organization
+Adafruit SSD1306
 
-CRYPTO1 encryption weaknesses
+Adafruit GFX
 
-Authentication protocol flow
+Wire (built-in)
 
-Manufacturer backdoors
+SPI (built-in)
 
-Project Learning Outcomes
-Embedded systems programming
+EEPROM (built-in)
 
-Hardware-software integration
+================================================================================
+LICENSE
+================================================================================
+MIT License - Educational use only
 
-Cryptographic analysis
-
-Power management design
-
-Data persistence strategies
-
-🤝 Contributing
-Educational contributions only:
-
-Fork repository
-
-Create feature branch
-
-Submit pull request
-
-Include documentation
-
-📜 License
-MIT License – Educational use only
-
-<div align="center">
-⚠️ Remember: This is for learning security, not bypassing it ⚠️
-
-Report Bug • Request Feature • Documentation
-
-</div>
+================================================================================
+REMEMBER
+================================================================================
+This tool demonstrates why physical security needs multiple layers.
+Use this knowledge to improve security, not bypass it.
