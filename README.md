@@ -1,383 +1,190 @@
-⚠️ IMPORTANT LEGAL DISCLAIMER: This project is created STRICTLY FOR EDUCATIONAL PURPOSES to understand RFID security vulnerabilities. Only test on cards you own or have explicit written permission to test. Unauthorized cloning of access cards may violate laws and property regulations. The developers assume no liability for misuse.
+🔐 Advanced RFID Cloner Pro
+<div align="center">
+https://img.shields.io/badge/version-2.0-blue
+https://img.shields.io/badge/status-educational%2520only-orange
+https://img.shields.io/badge/Arduino-IDE-00979D
+https://img.shields.io/badge/license-MIT-green
 
-📋 Project Overview
-Advanced RFID Cloner Pro is a sophisticated, portable device designed to demonstrate the security vulnerabilities in MIFARE Classic RFID cards commonly used in access control systems. This educational tool showcases how easily these cards can be read, analyzed, and cloned using readily available hardware.
+A sophisticated portable device for understanding RFID security vulnerabilities in MIFARE Classic cards
 
-🎯 Educational Objectives
-Understand RFID communication protocols (13.56 MHz)
+Features • Hardware • Quick Start • Documentation
 
-Learn about MIFARE Classic card memory structure
+</div>
+⚠️ CRITICAL LEGAL NOTICE
+This project is STRICTLY FOR EDUCATIONAL PURPOSES only.
 
-Explore cryptographic weaknesses in CRYPTO1 encryption
+Only test on cards you personally own
 
-Demonstrate dictionary and nested authentication attacks
+Obtain written permission before testing any access control system
 
-Practice secure hardware/software integration
+Unauthorized cloning may violate laws and property regulations
 
-Study access control system vulnerabilities
+The developers assume NO liability for misuse
 
-✨ Key Features
-🖥️ Hardware Features
-Standalone Operation: No computer required - fully portable
+✨ Features
+Core Capabilities
+Full Card Dumping – Read all 64 blocks (1KB) from MIFARE Classic cards
 
-OLED Display: 128x64 I2C screen for intuitive menu navigation
+Multi-Card Storage – Save up to 8 complete card dumps in non-volatile EEPROM
 
-Rotary Encoder: Easy menu browsing with built-in button for selection
+Dictionary Attacks – Tests 7+ default manufacturer keys automatically
 
-LED Indicators: Multi-color status LEDs (Green/Yellow/Red)
+Key Extraction – Advanced nested attack framework for unknown keys
 
-Battery Powered: Li-ion rechargeable with charging circuit
+Magic Card Support – UID writing capability for special writable cards
 
-Voltage Monitoring: Real-time battery level detection
+Hardware Highlights
+Standalone Operation – No computer needed, fully portable
 
-Compact Design: All components fit in a custom 3D-printed case
+OLED Display – 128x64 I2C screen with intuitive menu system
 
-📱 Software Capabilities
-Card Management
-Multi-Card Storage: Save up to 8 complete card dumps in EEPROM
+Rotary Encoder – Easy navigation with push-button selection
 
-Non-Volatile Memory: Preserves data even when powered off
+LED Indicators – Visual status (Green/Yellow/Red)
 
-Card Information Display: Shows UID, SAK, ATQA, and card type
-
-Timestamp Tracking: Records when each card was saved
-
-Reading Operations
-Full Memory Dump: Reads all 64 blocks (1KB) of MIFARE Classic cards
-
-Sector-by-Sector Reading: Handles authentication per sector
-
-Dictionary Attack: Tests 7+ default manufacturer keys
-
-Partial Read Recovery: Continues even if some sectors fail
-
-Real-time Progress: Visual feedback during reading
-
-Writing Operations
-Complete Card Cloning: Writes all data blocks to target cards
-
-Magic Card Support: Detects and utilizes UID-writable cards
-
-Selective Writing: Option to write only specific sectors
-
-Verification: Optional read-back verification of written data
-
-Advanced Security Analysis
-Key Extraction Engine: Attempts to recover unknown keys
-
-Nested Attack Framework: Exploits authentication protocol weaknesses
-
-Mfkey32 Placeholder: Framework for advanced nonce capture
-
-Key Storage: Saves discovered keys per sector (Key A and Key B)
-
-Success Statistics: Shows number of keys found per card
+Battery Powered – Li-ion rechargeable with monitoring
 
 User Interface
-Intuitive Menu System: 6 main menu options with submenus
+6 Main Menu Options with submenus
 
-Battery Status Icon: Visual battery level indicator
+Real-time Progress indicators during operations
 
-Slot Navigation: Easy browsing through stored cards
+Battery Status with visual bar graph
 
-Confirmation Dialogs: Prevents accidental operations
-
-Settings Menu: Clear cards, view about info, system reset
+Card Details – View UID, type, key statistics
 
 🔧 Hardware Requirements
 Essential Components
-Component	Specification	Quantity
-Microcontroller	Arduino Nano/Pro Mini (ATmega328P)	1
-RFID Module	MFRC522 (13.56MHz)	1
-Display	OLED 128x64 I2C (SSD1306)	1
-Rotary Encoder	With push button	1
-LEDs	5mm (Green, Yellow, Red)	3 each
-Resistors	330Ω for LEDs	3
-Battery	Li-ion 18650 (3.7V, 2000mAh+)	1
-Charging Module	TP4056 with protection	1
-Boost Converter	MT3608 (3.7V → 5V)	1
-PCB	Prototyping board or custom	1
-Enclosure	3D printed case	1
-Optional Components
-Voltage divider (10kΩ + 10kΩ) for battery monitoring
+Component	Specs	Purpose
+Arduino	Nano/Pro Mini (ATmega328P)	Main controller
+RFID Module	MFRC522 (13.56MHz)	Read/write cards
+OLED Display	128x64 I2C (SSD1306)	User interface
+Rotary Encoder	With push button	Menu navigation
+Battery	Li-ion 18650 (3.7V)	Portable power
+TP4056 Module	With protection	Battery charging
+MT3608	Boost converter	3.7V → 5V conversion
+Quick Wiring Reference
+text
+MFRC522 → D10(DTA), D13(SCK), D11(MOSI), D12(MISO), D9(RST)
+OLED    → A4(SDA), A5(SCL)
+Encoder → D2(CLK), D3(DT), D4(SW)
+LEDs    → D5(Green), D6(Yellow), D7(Red)
+Battery → A0 (via voltage divider)
+🚀 Quick Start
+1️⃣ Build Hardware
+Assemble components per wiring diagram
 
-Power switch
+Double-check 3.3V for MFRC522 (never 5V!)
 
-USB-C breakout board for charging
+Test power delivery before connecting RFID
 
-Tactile switches (optional backup buttons)
+2️⃣ Install Software
+bash
+# Required Libraries (install via Arduino Library Manager)
+- MFRC522 by Miguel Balboa
+- Adafruit SSD1306
+- Adafruit GFX
+3️⃣ First Use
+Power on device
 
-🔌 Wiring Diagram
+Navigate with encoder to "Read Card"
 
-MFRC522 → Arduino
-  SDA   → D10
-  SCK   → D13
-  MOSI  → D11
-  MISO  → D12
-  RST   → D9
-  3.3V  → 3.3V
-  GND   → GND
+Place your card on reader
 
-OLED I2C → Arduino
-  SDA    → A4
-  SCL    → A5
-  VCC    → 5V
-  GND    → GND
+Save to slot when prompted
 
-Encoder → Arduino
-  CLK    → D2 (interrupt)
-  DT     → D3 (interrupt)
-  SW     → D4
-  +      → 5V
-  GND    → GND
+Place blank card and select "Write Card"
 
-LEDs → Arduino (via 330Ω resistors)
-  Green  → D5
-  Yellow → D6
-  Red    → D7
-
-Power System
-  Battery+ → TP4056 BAT+ → Boost IN+ → Arduino VIN
-  Battery- → TP4056 BAT- → Boost IN- → Arduino GND
-  Boost OUT (5V) → Arduino VIN (if no USB)
-  Battery+ → Voltage divider → A0
-
-  📖 How It Works
-RFID Technology Basics
-The device operates at 13.56 MHz, the frequency used by MIFARE Classic cards. These cards contain 1KB of memory divided into 16 sectors, each protected by two 6-byte keys (Key A and Key B). The security relies on the proprietary CRYPTO1 encryption algorithm, which has known vulnerabilities.
-
-Cloning Process
-Authentication: The device attempts to authenticate with each sector using known default keys
-
-Reading: Successfully authenticated sectors are read block by block
-
-Storage: Complete card data (UID, keys, data blocks) is saved to EEPROM
-
-Writing: Data is transferred to a blank card using similar authentication
-
-Key Extraction Methods
-Dictionary Attack: Tests common manufacturer default keys
-
-Nested Attack: Uses one known key to recover others through protocol analysis
-
-Mfkey32: Advanced method capturing cryptographic nonces during communication
-
-🚀 Getting Started
-Assembly Steps
-Solder components to PCB according to wiring diagram
-
-Install Arduino IDE and required libraries
-
-Upload the firmware to Arduino
-
-Assemble in 3D-printed case
-
-Connect battery and test
-
-First Use
-Power on device (splash screen appears)
-
-Navigate menu with rotary encoder
-
-Select "Read Card" to capture your first card
-
-Follow on-screen prompts
-
-Save to available slot
-
-Test "Write Card" with blank media
-
-📊 Menu Structure
+📱 Menu System
 text
 MAIN MENU
-├── Read Card
-│   ├── Place card on reader
-│   ├── Reading progress
-│   └── Save to slot selection
-├── Write Card
-│   ├── Select source slot
-│   ├── Place blank card
-│   └── Writing progress
-├── View Cards
-│   ├── Browse slots 0-7
-│   ├── View UID and details
-│   └── Key statistics
-├── Extract Keys
-│   ├── Select card slot
-│   ├── Place original card
-│   └── Key search progress
-├── Settings
-│   ├── Clear All Cards
-│   ├── About Information
-│   └── Back to Main
-└── Battery Status
-    ├── Percentage display
-    └── Visual bar graph
-🔬 Technical Specifications
-Card Compatibility
-Supported Cards: MIFARE Classic 1K, 4K
+├── Read Card      → Dump card to memory
+├── Write Card     → Clone to blank card
+├── View Cards     → Browse saved dumps
+├── Extract Keys   → Advanced key recovery
+├── Settings       → Clear data, About
+└── Battery Status → Power level
+📊 Technical Specs
+Parameter	Value
+Frequency	13.56 MHz
+Card Support	MIFARE Classic 1K/4K
+Storage	8 cards (1KB EEPROM)
+Power	3.7V Li-ion
+Battery Life	10-15 hours
+Display	128x64 OLED
+🔍 How It Works
+RFID Card Structure
+16 sectors × 4 blocks = 64 blocks total
 
-Frequency: 13.56 MHz
+Each block = 16 bytes (1KB total memory)
 
-Memory: Full 1KB dump capability
+Sector trailer blocks contain access keys
 
-UID Length: 4-byte or 7-byte UID support
+Block 0 contains factory-locked UID
 
-Device Specifications
-Power Supply: 3.7V Li-ion battery
+Attack Methods
+Dictionary – Tests common default keys
 
-Current Draw: ~150mA active, ~50mA idle
+Nested – Uses known keys to extract others
 
-Battery Life: 10-15 hours continuous use
+Mfkey32 – Framework for nonce capture attacks
 
-Storage: 8 card slots in 1KB EEPROM
+⚠️ Known Limitations
+UID Cloning – Requires special "magic cards" for full UID copy
 
-Display: 128x64 OLED, 0.96 inch
+Encrypted Cards – Won't work without keys
 
-Dimensions: Customizable via 3D printing
+Locked Cards – Some cards have irreversible write protection
 
-⚠️ Security Considerations
-Vulnerabilities Demonstrated
-Default manufacturer keys still in use
+Newer Cards – MIFARE DESFire not supported
 
-Weak CRYPTO1 encryption
-
-No mutual authentication requirement
-
-Predictable random numbers in protocol
-
-Backdoors in certain card models
-
-Protection Recommendations
-Upgrade to MIFARE DESFire or similar
-
-Use diversified keys per card
-
-Implement mutual authentication
-
-Regular security audits
-
-Multi-factor access control
-
-📚 Educational Resources
+🛠️ Troubleshooting
+Issue	Solution
+No display	Check I2C address (0x3C or 0x3D)
+Card not detected	Verify SPI connections
+Read fails	Try key extraction first
+Write fails	Card may be read-only
+Battery not charging	Check TP4056 connections
+📚 Learning Resources
 Understanding RFID Security
-RFID Basics: Electromagnetic coupling, modulation, protocols
+How electromagnetic coupling works
 
-MIFARE Architecture: Memory organization, sector structure
+MIFARE memory organization
 
-CRYPTO1 Cryptanalysis: Known attacks and weaknesses
+CRYPTO1 encryption weaknesses
 
-Protocol Analysis: Authentication flow, nonce generation
+Authentication protocol flow
 
-Supply Chain Risks: Manufacturer backdoors and magic cards
+Manufacturer backdoors
 
 Project Learning Outcomes
 Embedded systems programming
 
 Hardware-software integration
 
-Cryptographic protocol analysis
+Cryptographic analysis
 
-User interface design
-
-Power management
+Power management design
 
 Data persistence strategies
 
-🔧 Troubleshooting Guide
-Common Issues
-Problem	Likely Cause	Solution
-No display	I2C address wrong	Check OLED address (0x3C or 0x3D)
-Card not detected	Wiring issue	Verify SPI connections
-Read fails	Unknown keys	Try key extraction first
-Write fails	Card locked	Card may be read-only
-Battery not charging	TP4056 fault	Check protection circuit
-🛠️ Development Environment
-Required Libraries
-MFRC522 by Miguel Balboa
+🤝 Contributing
+Educational contributions only:
 
-Adafruit SSD1306
+Fork repository
 
-Adafruit GFX
+Create feature branch
 
-Wire (built-in)
+Submit pull request
 
-SPI (built-in)
-
-EEPROM (built-in)
-
-Arduino IDE Setup
-Install Arduino IDE (1.8.19+)
-
-Add board support for Arduino Nano
-
-Install required libraries via Library Manager
-
-Select correct port and board
-
-Compile and upload
-
-📈 Future Enhancements
-Planned Features
-Bluetooth connectivity for data export
-
-SD card logging for extended storage
-
-PC software for detailed analysis
-
-Support for more card types (MIFARE Plus, DESFire)
-
-Waveform capture for deep protocol analysis
-
-Mobile app integration
-
-Cloud backup of card dumps
-
-Advanced cryptanalysis tools
+Include documentation
 
 📜 License
-This project is licensed under the MIT License - see LICENSE file for details. Educational use only.
+MIT License – Educational use only
 
-🤝 Contributing
-Contributions for educational purposes are welcome! Please:
+<div align="center">
+⚠️ Remember: This is for learning security, not bypassing it ⚠️
 
-Fork the repository
+Report Bug • Request Feature • Documentation
 
-Create a feature branch
-
-Submit a pull request
-
-Include educational documentation
-
-⚖️ Legal Notice
-IMPORTANT: This tool is for security research and education only. Users must:
-
-Only test on their own property
-
-Obtain written permission before testing any access control system
-
-Comply with all local, state, and federal laws
-
-Not use for unauthorized access or circumvention of security measures
-
-Accept full responsibility for any misuse
-
-The creators and contributors are not liable for any illegal or unethical use of this information or device.
-
-🙏 Acknowledgments
-NXP Semiconductors for MIFARE documentation
-
-Arduino community for libraries and examples
-
-Security researchers who disclosed RFID vulnerabilities
-
-Open source contributors for MFRC522 library
-
-📞 Support
-For educational questions and responsible disclosure of vulnerabilities:
-
-Open an issue on GitHub
-
-Join the discussion in Discussions tab
-
-Read the Wiki for detailed tutorials
+</div>
