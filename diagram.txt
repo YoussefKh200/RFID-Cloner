@@ -1,0 +1,29 @@
+MFRC522 → Arduino
+  SDA   → D10
+  SCK   → D13
+  MOSI  → D11
+  MISO  → D12
+  RST   → D9
+  3.3V  → 3.3V
+  GND   → GND
+
+OLED I2C → Arduino
+  SDA    → A4
+  SCL    → A5
+  VCC    → 5V
+  GND    → GND
+
+Encoder → Arduino
+  CLK    → D2 (interrupt)
+  DT     → D3 (interrupt)
+  SW     → D4
+  +      → 5V
+  GND    → GND
+
+LEDs → Arduino (via 330Ω resistors)
+  Green  → D5
+  Yellow → D6
+  Red    → D7
+
+Battery Monitor
+  Battery+ → Voltage divider → A0
